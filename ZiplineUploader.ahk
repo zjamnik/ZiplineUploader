@@ -111,13 +111,12 @@ for fil in files {
     ; Extract URL from JSON
     if RegExMatch(output, '"url":"(.*?)"', &m) {
         url := m[1]
+        uploadedURLs .= url "`n"
+        uploadedFiles++
     } else {
         MsgBox "Failed to extract URL.`nResponse:`n" output
         ExitApp
     }
-
-    uploadedURLs .= url "`n"
-    uploadedFiles++
 }
 
 ; Copy to clipboard
