@@ -19,6 +19,11 @@ loop {
     uploadedURLs := ""
     uploadedFiles := 0
     Loop Files momentsPath "\" trimPattern, "F" {
+        fileSize := 0
+        while (fileSize < FileGetSize()) {
+            fileSize := FileGetSize()
+            Sleep(200)
+        }
 
         ; Build curl command
         cmd := 'curl -s -H "Authorization: ' ziplineToken '" '
