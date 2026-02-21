@@ -100,6 +100,7 @@ for fil in files {
     ; Build curl command
     cmd := 'curl -s -H "Authorization: ' Token '" '
     cmd .= '-H "x-zipline-original-name: true" '
+    cmd .= '-H "x-zipline-p-format: name" '
     cmd .= '-F "file=@' fil ';type=' mime '" '
     cmd .= '-F "filename=' name '" '
     cmd .= '"' ZiplineURL '/api/upload"'

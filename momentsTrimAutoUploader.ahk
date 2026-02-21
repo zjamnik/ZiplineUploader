@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
 
-momentsPath := IniRead("trimUploader.ini", "location", "path", "")
+momentsPath := IniRead("trimUploader.ini", "location", "momentsPath", "")
 if (momentsPath = "") {
     momentsPath := DirSelect()
 }
@@ -9,7 +9,7 @@ ziplineURL := IniRead("trimUploader.ini", "location", "ziplineURL", "PROVIDE ZIP
 ziplineFolder := IniRead("trimUploader.ini", "location", "ziplineFolder", "PROVIDE FOLDER ID")
 ziplineToken := IniRead("trimUploader.ini", "location", "ziplineToken", "PROVIDE ZIPLINE TOKEN")
 
-IniWrite(momentsPath, "trimUploader.ini", "location", "path")
+IniWrite(momentsPath, "trimUploader.ini", "location", "momentsPath")
 IniWrite(trimPattern, "trimUploader.ini", "location", "trimPattern")
 IniWrite(ziplineURL, "trimUploader.ini", "location", "ziplineURL")
 IniWrite(ziplineFolder, "trimUploader.ini", "location", "ziplineFolder")
@@ -23,9 +23,10 @@ loop {
         ; Build curl command
         cmd := 'curl -s -H "Authorization: ' ziplineToken '" '
         cmd .= '-H "x-zipline-original-name: true" '
+        cmd .= '-H "x-zipline-p-format: name" '
         cmd .= '-H "x-zipline-folder: ' ziplineFolder '" '
+        cmd .= '-H "x-zipline-filename: ' StrReplace(A_LoopFileName, ".mp4", "") '" '
         cmd .= '-F "file=@' A_LoopFileFullPath ';type=video/mp4" '
-        cmd .= '-F "filename=' A_LoopFileName '" '
         cmd .= '"' ZiplineURL '/api/upload"'
 
         ; MsgBox(cmd)
